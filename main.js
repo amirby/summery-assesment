@@ -59,7 +59,10 @@ function reduce(array, f, acc) {
 //wordLengths("hello its me") // [5,3,2]
 
 function wordLengths(str) {
-    // TODO: your code here 
+    var arr = str.split(" ");
+    return map(arr, function(element, i){
+      return element.length;
+    })
 }
 
 //=============================================================================
@@ -72,7 +75,14 @@ function wordLengths(str) {
 // countOccurrences("hello, world!", "l"); // 3
 
 function countOccurrences(string, character) {
-    // your code is here
+    var count = 0;
+    var array = string.split('')
+    each(array, function(element, i){
+      if (element === character){
+        return count += 1
+      }
+    })
+    return count;
 }
 
 //=============================================================================
@@ -84,7 +94,10 @@ function countOccurrences(string, character) {
 // wordsLongerThanThree("Hello Mad World") //["Hello", "World"]
 
 function wordsLongerThanThree(str) {
-    // TODO: your code here 
+   var arr = str.split(' ');
+   return filter ( arr, function (element, i){
+     return element.length > 3;
+   })
 }
 
 //=============================================================================
@@ -99,7 +112,9 @@ function wordsLongerThanThree(str) {
 //repeatString('dog', 3); // => 'dog' + 'dog' + 'dog' => 'dogdogdog'
 
 function repeatString(str, count) { 
- // TODO: your code here 
+ if (count <= 0){
+   return ''
+ }else return str + repeatString(str,count - 1)
 } 
  
 
@@ -129,6 +144,43 @@ function repeatString(str, count) {
 // pizza.eatSlice();
 
 // Write your code here .....
+function makePizza(crust, size, numberOfSlice){
+  var crust = crust;
+  var size = size;
+  var umberOfSlice = umberOfSlice;
+  var ingredient = [];
+  return  {
+    addIngredients: function(ingr){
+      ingredient.push(ingr)
+    },
+
+    displayIngredients: function(){
+      var result = "";
+      for (var i=0; i<ingredient.length ; i++){
+        if (i === ingredient.length-1 ){
+           result += ingredient[i];
+        }
+        else  result += ingredient[i] + ', ';
+      };
+      return result;
+    }, 
+    
+    bakePizza: function(){
+      setTimeout( function(){
+        return "Your " + crust + " " + size + " " + numberOfSlice + " slice pizza is done";
+      } ,2000); 
+    },
+
+    eatSlice: function(){
+      if ( numberOfSlice > 0){
+        numberOfSlice = numberOfSlice - 1;
+        return "yummy";
+      }
+      else if (numberOfSlice === 0){}
+      return "the Pizza is finished";
+    }
+  }
+}
 
 //=============================================================================
 /*                                  Q6                                      */
@@ -153,8 +205,31 @@ d- Decrement the number of "unread" books
 */
 
 // Now, to make sure that you are actually reading, make a comment below this and type: Yes I am
+//Yes I am
+function ReadingList(){
+  return {
+    read: 0,
+    unRead: 0,
+    toRead: [],
+    currentRead: undefined,
+    readBooks: [],
+    addBook: this.addBook,
+    finishCurrentBook: this.finishCurrentBook
+  }
+}
 
-// Write your code here .....
+var addBook = function(name){
+  this.toRead.push(name);
+  this.unRead += 1
+}
+
+var finishCurrentBook =  function(){
+  var current = this.currentRead;
+  this.readBooks.push(current);
+  this.read ++;
+  this.currentRead = this.toRead[0];
+  this.unRead --;
+}
 
 //=============================================================================
 /*                                  Q7                                       */
@@ -174,7 +249,40 @@ d- Decrement the number of "unread" books
 //  safe('silver-bar','big') => "Can't fit"
 //  safe('money','small') => "watch gold-bar money"
 
-// Write your code here .....
+function makeSafe(limit){
+  var limitSize = limit;
+  var storage = 0
+  var items =[];
+  function addItem(item, itemSize){
+
+      var size = 0
+      if (itemSize === 'small') {
+        size = 1;
+      } else if (itemSize === 'medium'){
+        size = 2;
+      }else if (itemSize === 'big'){
+        size = 3;
+      }
+      if ((storage + size) > limitSize){
+       return "can't fit"
+      }
+      else if ((storage + size) < limitSize){
+       items.push(item);
+       storage = storage + size;
+      }
+      else if ((storage + size) === limitSize){
+        items.push(item);
+        storage = storage + size;
+        var str =''
+       for (var i = 0 ; i< items.length ; i++){
+         str = str + ' ' + items[i]
+       } 
+       return str;
+     }
+    }
+    return addItem;
+  }
+
 
 //=============================================================================
 /*                                  Q8                                       */
